@@ -21,6 +21,8 @@ imageID do1drfft(const char *in_name, const char *out_name);
 
 imageID do2dfft(const char *in_name, const char *out_name);
 
+imageID do2drfft(const char *in_name, const char *out_name);
+
 // ==========================================
 // Command line interface wrapper function(s)
 // ==========================================
@@ -68,6 +70,20 @@ errno_t fft_do2dfft_cli()
     }
 }
 
+errno_t fft_do2drfft_cli()
+{
+    if(CLI_checkarg(1, CLIARG_IMG) + CLI_checkarg(2, CLIARG_STR_NOT_IMG) == 0)
+    {
+        do2drfft(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string);
+
+        return CLICMD_SUCCESS;
+    }
+    else
+    {
+        return CLICMD_INVALID_ARG;
+    }
+}
+
 // ==========================================
 // Register CLI command(s)
 // ==========================================
@@ -78,10 +94,19 @@ errno_t dofft_addCLIcmd()
         "dofft",
         __FILE__,
         fft_do2dfft_cli,
-        "perform FFT",
+        "perform 2D FFT",
         "<input> <output>",
         "fofft in out",
         "int do2dfft(const char *in_name, const char *out_name)");
+
+    RegisterCLIcommand(
+        "dorfft",
+        __FILE__,
+        fft_do2drfft_cli,
+        "perform 2D FFT on real float arrays",
+        "<input> <output>",
+        "dorfft in out",
+        "int do2drfft(const char *in_name, const char *out_name)");
 
     RegisterCLIcommand(
         "do1Dfft",
