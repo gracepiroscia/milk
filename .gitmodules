@@ -65,3 +65,6 @@
 [submodule "coffee"]
 	path = plugins/coffee-src
 	url = ""
+[submodule "plugins/cacao-src"]
+	path = plugins/cacao-src
+	url = https://github.com/gracepiroscia/cacao.git
